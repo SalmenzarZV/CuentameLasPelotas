@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CuentameLasPelotas</string>
+    <string name="gameTitle">Cuéntame las Pelotas: The game</string>
+    <string name="izi">Fácil</string>
+    <string name="hard">Difícil</string>
+    <string name="normal">Normal</string>
+</resources>
