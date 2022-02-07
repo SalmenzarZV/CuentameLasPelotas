@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -13,21 +14,21 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GraphicView extends View {
     Paint text;
     Paint[] paintBalls;
-    ArrayList<int[]> balls;
+    static ArrayList<int[]> balls;
 
     final int RADIO = 30 ;
     int initPosText = getHeight()+ 32,
         textSpeed = 13,
         difficulty = 0;
-    int centroX, centroY;
-    int[] colors = {Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.MAGENTA, Color.YELLOW};
+    int centroX, centroY, speedX, speedY;
+    int[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA, Color.YELLOW};
 
     public GraphicView(Context context, AttributeSet attrs) {
         super(context, attrs);
         text = new Paint();
         text.setColor(Color.BLUE);
         text.setTextSize(100);
-        createBalls(difficulty);
+
     }
 
     @Override
@@ -42,12 +43,10 @@ public class GraphicView extends View {
         if (initPosText < screenHeight+500){
             paintText(c, screenHeight);
         } else if (difficulty != 0){
+            if (balls == null){
+                createBalls(difficulty);
+            }
             paintBalls(c);
-            /*
-            Paint apc = new Paint();
-            apc.setColor(Color.RED);
-            c.drawCircle(centroX, centroY, 30,apc);
-            */
 
         } else {
             String sorry = "We're sorry, something bad happened...";
@@ -69,42 +68,83 @@ public class GraphicView extends View {
 
     //TODO COMPROBAR QUE EL ARRAY DE PELOTAS ESTA INICIALIZADO
     private void paintBalls(Canvas c) {
-
+        for (int i = 0; i < balls.size(); i++) {
+            paintBall(balls.get(i), c, i);
+        }
     }
+
+    private void paintBall(int[] ball, Canvas c, int i) {
+        ball[0] += ball[2];
+        ball[1] += ball[3];
+
+        if (ball[0] >= getWidth()){
+            ball[0] = getWidth();
+            ball[2] *= -1;
+        }
+
+        if (ball[0] <= RADIO){
+            ball[0] = RADIO;
+            ball[2] *= -1;
+        }
+
+        if (ball[1] >= getHeight()){
+            ball[1] = getHeight();
+            ball[3] *= -1;
+        }
+
+        if (ball[1] <= RADIO){
+            ball[1] = RADIO;
+            ball[3] *= -1;
+        }
+        //Log.v("jamaica");
+
+        Paint p = new Paint();
+        p.setColor(ball[4]);
+        c.drawCircle(ball[0], ball[1], RADIO, p);
+    }
+
 
     private void createBalls(int difficulty) {
         int[] colors;
         int nBalls;
         switch (difficulty){
             case 1:/*Easy Mode*/  //Log.v("jamaica", "izi mode");
-                colors = chooseColors(2);
                 nBalls = ThreadLocalRandom.current().nextInt(2, 4);
-                balls = inflateBalls(colors, nBalls);
+                balls = inflateBalls(nBalls, difficulty);
                 break;
             case 2:/*Normal Mode*/ //Log.v("jamaica", "normalelelemode");
-                colors = chooseColors(ThreadLocalRandom.current().nextInt(0, this.colors.length));
                 nBalls = ThreadLocalRandom.current().nextInt(4, 7);
-                balls = inflateBalls(colors, nBalls);
+                balls = inflateBalls(nBalls, difficulty);
                 break;
             case 3:/*Hard Mode*/ //Log.v("jamaica", "Dificilisimode");
-                colors = chooseColors(0);
                 nBalls = ThreadLocalRandom.current().nextInt(7, 11);
-                balls = inflateBalls(colors, nBalls);
+                balls = inflateBalls(nBalls, difficulty);
                 break;
         }
-
-        paintBalls = new Paint[balls.size()];
     }
 
-    private ArrayList<int[]> inflateBalls(int[] colors, int nBalls) {
-        int randomX, randomY, color;
+    private ArrayList<int[]> inflateBalls(int nBalls, int difficulty) {
+        int randomX, randomY;
         int[] ball;
         ArrayList<int[]> balls= new ArrayList<int[]>();
         for (int i = 0; i<nBalls; i++){
             randomX = ThreadLocalRandom.current().nextInt(RADIO, getWidth());
             randomY = ThreadLocalRandom.current().nextInt(RADIO, getHeight());
-            color = colors[ThreadLocalRandom.current().nextInt(0, colors.length)];
-            ball = new int[] {randomX, randomY, color};
+            switch (difficulty){
+                case 1:
+                    speedX = ThreadLocalRandom.current().nextInt(5, 10);
+                    speedY = ThreadLocalRandom.current().nextInt(5, 10);
+                    break;
+                case 2:
+                    speedX = ThreadLocalRandom.current().nextInt(5, 15);
+                    speedY = ThreadLocalRandom.current().nextInt(5, 15);
+                    break;
+                case 3:
+                    speedX = ThreadLocalRandom.current().nextInt(5, 20);
+                    speedY = ThreadLocalRandom.current().nextInt(5, 20);
+                    break;
+            }
+            ball = new int[] {randomX, randomY, speedX, speedY, colors[ThreadLocalRandom.current().nextInt(0, colors.length)]};
             balls.add(ball);
         }
         return balls;
@@ -145,15 +185,6 @@ public class GraphicView extends View {
 
 
     private void iziMode() {
-        int color1 = ThreadLocalRandom.current().nextInt(0, colors.length), color2;
-
-        //Comprobamos que los colores no sean los
-        do{
-            color2 = ThreadLocalRandom.current().nextInt(0,colors.length);
-        }while (color2 == color1);
-
-        int numBalls = ThreadLocalRandom.current().nextInt(2, 4);
-
 
     }
 
