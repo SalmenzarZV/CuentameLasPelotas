@@ -13,6 +13,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         graphicView = findViewById(R.id.graphicView);
         difficulty = getIntent().getIntExtra("difficulty", 0);
+        graphicView.setContext(this);
         graphicView.setDifficulty(difficulty);
     }
 

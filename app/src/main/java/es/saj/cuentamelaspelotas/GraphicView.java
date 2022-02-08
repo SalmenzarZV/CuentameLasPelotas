@@ -1,9 +1,11 @@
 package es.saj.cuentamelaspelotas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -12,23 +14,25 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GraphicView extends View {
+    Context context;
     Paint text;
     Paint[] paintBalls;
     static ArrayList<int[]> balls;
 
-    final int RADIO = 30 ;
+    final int RADIO = 45 ;
     int initPosText = getHeight()+ 32,
         textSpeed = 13,
         difficulty = 0;
     int centroX, centroY, speedX, speedY;
     int[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA, Color.YELLOW};
+    int x = getWidth(), y = getHeight();
+
 
     public GraphicView(Context context, AttributeSet attrs) {
         super(context, attrs);
         text = new Paint();
         text.setColor(Color.BLUE);
         text.setTextSize(100);
-
     }
 
     @Override
@@ -38,15 +42,36 @@ public class GraphicView extends View {
     }
 
     protected void onDraw(Canvas c) {
-        final int screenWidth = getWidth(),
-                screenHeight = getHeight();
+        final int screenHeight = getHeight();
         if (initPosText < screenHeight+500){
             paintText(c, screenHeight);
         } else if (difficulty != 0){
             if (balls == null){
                 createBalls(difficulty);
+                new CountDownTimer(10000, 1) {
+
+                    @Override
+                    public void onTick(long l) {
+                        Log.v("jamaica", "son: "+l/1000);
+                        if (l < 4000){
+                            Paint p = new Paint();
+                            p.setTextSize(200);
+                            p.setColor(Color.BLACK);
+                            String t = l/1000+"";
+                            c.drawText(t, x+490, y+1000, p);
+                        }
+                        paintBalls(c);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        Log.v("jamaica", "SACAB0!");
+                        goToGuess();
+
+                    }
+                }.start();
             }
-            paintBalls(c);
+
 
         } else {
             String sorry = "We're sorry, something bad happened...";
@@ -56,6 +81,14 @@ public class GraphicView extends View {
         postInvalidateDelayed(1);
     }
 
+    private void goToGuess() {
+        Intent intent = new Intent(context, GuessActivity.class);
+        intent.putExtra("nballs", balls.size());
+        intent.putExtra("difficulty", difficulty);
+        for (int i = 0; i< balls.size(); i++) {
+            intent.putExtra(String.valueOf(i), balls.get(i));
+        }
+    }
 
 
     private void paintText(Canvas c, int screenHeight) {
@@ -66,7 +99,6 @@ public class GraphicView extends View {
 
     }
 
-    //TODO COMPROBAR QUE EL ARRAY DE PELOTAS ESTA INICIALIZADO
     private void paintBalls(Canvas c) {
         for (int i = 0; i < balls.size(); i++) {
             paintBall(balls.get(i), c, i);
@@ -105,7 +137,6 @@ public class GraphicView extends View {
 
 
     private void createBalls(int difficulty) {
-        int[] colors;
         int nBalls;
         switch (difficulty){
             case 1:/*Easy Mode*/  //Log.v("jamaica", "izi mode");
@@ -150,45 +181,11 @@ public class GraphicView extends View {
         return balls;
     }
 
-    private int[] chooseColors(int numColors) {
-        int[] colors;
-        if (numColors == 0){
-            colors = this.colors;
-        } else {
-            ArrayList<Integer> addColors= new ArrayList<>();
-
-            for (int i = 0; i<numColors; i++){
-                int color = ThreadLocalRandom.current().nextInt(0,this.colors.length);
-                if (addColors.contains(color)){
-                    i--;
-                } else {
-                    addColors.add(color);
-                }
-            }
-            colors = new int[addColors.size()];
-            for (int i = 0; i<colors.length; i++){
-                colors[i] = addColors.get(i);
-            }
-        }
-
-        return colors;
-    }
-
-    private void normaleMode() {
-
-    }
-
-    private void dificilisiMode() {
-
-    }
-
-
-
-    private void iziMode() {
-
-    }
-
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }
