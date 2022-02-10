@@ -9,21 +9,21 @@ import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+
+
 
 public class GraphicView extends View {
     Context context;
     Paint text;
-    Paint[] paintBalls;
-    static ArrayList<int[]> balls;
+    public static ArrayList<int[]> balls;
 
     final int RADIO = 45 ;
     int initPosText = getHeight()+ 32,
         textSpeed = 13,
         difficulty = 0;
     int centroX, centroY, speedX, speedY;
+    long time = 50;
     int[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA, Color.YELLOW};
     int x = getWidth(), y = getHeight();
 
@@ -53,25 +53,25 @@ public class GraphicView extends View {
                     @Override
                     public void onTick(long l) {
                         Log.v("jamaica", "son: "+l/1000);
-                        if (l < 4000){
-                            Paint p = new Paint();
-                            p.setTextSize(200);
-                            p.setColor(Color.BLACK);
-                            String t = l/1000+"";
-                            c.drawText(t, x+490, y+1000, p);
-                        }
-                        paintBalls(c);
+                          time = l/1000;
                     }
 
                     @Override
                     public void onFinish() {
                         Log.v("jamaica", "SACAB0!");
                         goToGuess();
-
                     }
                 }.start();
-            }
 
+            }
+            if (time < 4) {
+                Paint p = new Paint();
+                p.setTextSize(200);
+                p.setColor(Color.BLACK);
+                String t = time+"";
+                c.drawText(t, x + 490, y + 1000, p);
+            }
+            paintBalls(c);
 
         } else {
             String sorry = "We're sorry, something bad happened...";
@@ -83,11 +83,12 @@ public class GraphicView extends View {
 
     private void goToGuess() {
         Intent intent = new Intent(context, GuessActivity.class);
-        intent.putExtra("nballs", balls.size());
+        intent.putExtra("nBalls", balls.size());
         intent.putExtra("difficulty", difficulty);
         for (int i = 0; i< balls.size(); i++) {
             intent.putExtra(String.valueOf(i), balls.get(i));
         }
+        context.startActivity(intent);
     }
 
 
@@ -101,11 +102,11 @@ public class GraphicView extends View {
 
     private void paintBalls(Canvas c) {
         for (int i = 0; i < balls.size(); i++) {
-            paintBall(balls.get(i), c, i);
+            paintBall(balls.get(i), c);
         }
     }
 
-    private void paintBall(int[] ball, Canvas c, int i) {
+    private void paintBall(int[] ball, Canvas c) {
         ball[0] += ball[2];
         ball[1] += ball[3];
 
@@ -140,15 +141,15 @@ public class GraphicView extends View {
         int nBalls;
         switch (difficulty){
             case 1:/*Easy Mode*/  //Log.v("jamaica", "izi mode");
-                nBalls = ThreadLocalRandom.current().nextInt(2, 4);
+                nBalls = (int) (Math.random()*(5-2) +2);
                 balls = inflateBalls(nBalls, difficulty);
                 break;
             case 2:/*Normal Mode*/ //Log.v("jamaica", "normalelelemode");
-                nBalls = ThreadLocalRandom.current().nextInt(4, 7);
+                nBalls =  (int) (Math.random()*(8-5) +5);
                 balls = inflateBalls(nBalls, difficulty);
                 break;
             case 3:/*Hard Mode*/ //Log.v("jamaica", "Dificilisimode");
-                nBalls = ThreadLocalRandom.current().nextInt(7, 11);
+                nBalls =  (int) (Math.random()*(12-8) +8);
                 balls = inflateBalls(nBalls, difficulty);
                 break;
         }
@@ -157,25 +158,26 @@ public class GraphicView extends View {
     private ArrayList<int[]> inflateBalls(int nBalls, int difficulty) {
         int randomX, randomY;
         int[] ball;
-        ArrayList<int[]> balls= new ArrayList<int[]>();
+        ArrayList<int[]> balls= new ArrayList<>();
         for (int i = 0; i<nBalls; i++){
-            randomX = ThreadLocalRandom.current().nextInt(RADIO, getWidth());
-            randomY = ThreadLocalRandom.current().nextInt(RADIO, getHeight());
+            randomX = generateRandom(RADIO, getWidth());
+            randomY = generateRandom(RADIO, getHeight());
             switch (difficulty){
                 case 1:
-                    speedX = ThreadLocalRandom.current().nextInt(5, 10);
-                    speedY = ThreadLocalRandom.current().nextInt(5, 10);
+                    speedX = generateRandom(5, 10);
+                    speedY = generateRandom(5, 10);
                     break;
                 case 2:
-                    speedX = ThreadLocalRandom.current().nextInt(5, 15);
-                    speedY = ThreadLocalRandom.current().nextInt(5, 15);
+                    speedX = generateRandom(5, 15);
+                    speedY = generateRandom(5, 15);
                     break;
                 case 3:
-                    speedX = ThreadLocalRandom.current().nextInt(5, 20);
-                    speedY = ThreadLocalRandom.current().nextInt(5, 20);
+                    speedX = generateRandom(5, 20);
+                    speedY = generateRandom(5, 20);
                     break;
             }
-            ball = new int[] {randomX, randomY, speedX, speedY, colors[ThreadLocalRandom.current().nextInt(0, colors.length)]};
+            int numeroAleatorio = (int) (Math.random()*colors.length);
+            ball = new int[] {randomX, randomY, speedX, speedY, colors[numeroAleatorio]};
             balls.add(ball);
         }
         return balls;
@@ -187,5 +189,13 @@ public class GraphicView extends View {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public  int generateRandom(int min, int max){
+        int random;
+        max++;
+        random = (int) (Math.random()*(max-min) +min);
+
+        return random;
     }
 }

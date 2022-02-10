@@ -6,4 +6,179 @@
     android:layout_height="match_parent"
     tools:context=".GuessActivity">
 
+    <TextView
+        android:id="@+id/tvHowMany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:labelFor="@id/etHowMany"
+        android:text="@string/cu_ntas_pelotas_contaste"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etHowMany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHowMany"
+        tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/tvBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/azules"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/etBlue"
+        app:layout_constraintEnd_toStartOf="@+id/etBlue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etBlue" />
+
+    <EditText
+        android:id="@+id/etBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/etRed"
+        app:layout_constraintEnd_toEndOf="@+id/tvHowMany"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvHowMany"
+        app:layout_constraintTop_toBottomOf="@+id/tvHowMany"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tvRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rojos"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/etRed"
+        app:layout_constraintEnd_toStartOf="@+id/etRed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etRed" />
+
+    <EditText
+        android:id="@+id/etRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/etGreen"
+        app:layout_constraintEnd_toEndOf="@+id/tvHowMany"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvHowMany"
+        app:layout_constraintTop_toBottomOf="@+id/etBlue"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tvGreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verdes"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/etGreen"
+        app:layout_constraintEnd_toStartOf="@+id/etGreen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etGreen" />
+
+    <EditText
+        android:id="@+id/etGreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/etPink"
+        app:layout_constraintEnd_toEndOf="@+id/tvHowMany"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvHowMany"
+        app:layout_constraintTop_toBottomOf="@+id/etRed"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tvPink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rosas"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/etPink"
+        app:layout_constraintEnd_toStartOf="@+id/etPink"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etPink" />
+
+    <EditText
+        android:id="@+id/etPink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/etYellow"
+        app:layout_constraintEnd_toEndOf="@+id/tvHowMany"
+        app:layout_constraintStart_toStartOf="@+id/tvHowMany"
+        app:layout_constraintTop_toBottomOf="@+id/etGreen"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tvYellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/amarillas"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/etYellow"
+        app:layout_constraintEnd_toStartOf="@+id/etYellow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etYellow" />
+
+    <EditText
+        android:id="@+id/etYellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btGuess"
+        app:layout_constraintEnd_toEndOf="@+id/tvHowMany"
+        app:layout_constraintStart_toStartOf="@+id/tvHowMany"
+        app:layout_constraintTop_toBottomOf="@+id/etPink"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btGuess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/listo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,4 +4,13 @@
     <string name="izi">Fácil</string>
     <string name="hard">Difícil</string>
     <string name="normal">Normal</string>
+    <string name="cu_ntas_pelotas_contaste">¿Cuántas pelotas contaste?</string>
+    <string name="azules">Azules:</string>
+    <string name="rojos">Rojos:</string>
+    <string name="button">Button</string>
+    <string name="verdes">Verdes</string>
+    <string name="rosas">Rosas:</string>
+    <string name="amarillas">Amarillas:</string>
+    <string name="listo">Listo</string>
+    <string name="nueva_partida">Nueva Partida</string>
 </resources>
