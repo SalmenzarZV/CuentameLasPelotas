@@ -5,12 +5,19 @@
     <string name="hard">Difícil</string>
     <string name="normal">Normal</string>
     <string name="cu_ntas_pelotas_contaste">¿Cuántas pelotas contaste?</string>
-    <string name="azules">Azules:</string>
     <string name="rojos">Rojos:</string>
     <string name="button">Button</string>
     <string name="verdes">Verdes</string>
-    <string name="rosas">Rosas:</string>
-    <string name="amarillas">Amarillas:</string>
     <string name="listo">Listo</string>
     <string name="nueva_partida">Nueva Partida</string>
+    <string name="win">YOU WIN!</string>
+    <string name="lose">YOU LOSE</string>
+    <string name="estas_son_las_pelotas_que_hab_a">ESTAS SON LAS PELOTAS QUE HABÍA:</string>
+    <string name="azules">Azules:</string>
+    <string name="rojas">Rojas:</string>
+    <string name="rosas">Rosas:</string>
+    <string name="amarillas">Amarillas:</string>
+    <string name="verdesResult">Verdes:</string>
+    <string name="take_a_photo">TAKE A PHOTO</string>
+    <string name="description">description</string>
 </resources>

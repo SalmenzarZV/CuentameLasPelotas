@@ -13,6 +13,8 @@
         android:layout_marginTop="32dp"
         android:labelFor="@id/etHowMany"
         android:text="@string/cu_ntas_pelotas_contaste"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

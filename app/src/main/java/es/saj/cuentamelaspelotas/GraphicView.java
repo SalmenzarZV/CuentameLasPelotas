@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -26,13 +27,30 @@ public class GraphicView extends View {
     long time = 50;
     int[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA, Color.YELLOW};
     int x = getWidth(), y = getHeight();
-
+    MediaPlayer gameSong;
 
     public GraphicView(Context context, AttributeSet attrs) {
         super(context, attrs);
         text = new Paint();
         text.setColor(Color.BLUE);
         text.setTextSize(100);
+
+    }
+
+    private void setMusic(int difficulty) {
+        switch (difficulty){
+            case 1:
+                gameSong = MediaPlayer.create(context, R.raw.easy);
+                break;
+
+            case 2:
+                gameSong = MediaPlayer.create(context, R.raw.normal);
+                break;
+
+            case 3:
+                gameSong = MediaPlayer.create(context, R.raw.hard);
+                break;
+        }
     }
 
     @Override
@@ -59,11 +77,14 @@ public class GraphicView extends View {
                     @Override
                     public void onFinish() {
                         Log.v("jamaica", "SACAB0!");
+                        gameSong.stop();
                         goToGuess();
                     }
                 }.start();
-
+                setMusic(difficulty);
+                gameSong.start();
             }
+
             if (time < 4) {
                 Paint p = new Paint();
                 p.setTextSize(200);

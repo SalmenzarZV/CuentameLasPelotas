@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ public class GuessActivity extends AppCompatActivity {
     Button btGuess;
     EditText etHowMany, etBlue, etRed, etGreen, etPink, etYellow;
     TextView lbBlue, lbRed, lbGreen, lbPink, lbYellow;
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,10 @@ public class GuessActivity extends AppCompatActivity {
         Log.v("jamaica", balls.size()+"");
         printColorBalls();
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.guess);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+
         btGuess.setOnClickListener(view -> {
             boolean result;
             if (difficulty == 3){
@@ -42,7 +48,9 @@ public class GuessActivity extends AppCompatActivity {
             }
             Intent intent = new Intent(this, ResultActivity.class);
             intent.putExtra("result", result);
+            intent.putExtra("difficulty", difficulty);
             Log.v("jamaica", Boolean.toString(result));
+            mediaPlayer.stop();
             startActivity(intent);
         });
     }
